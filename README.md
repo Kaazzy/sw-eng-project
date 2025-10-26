@@ -16,6 +16,7 @@ We use a simple 4-branch structure:
 
 ### Documentation
 
+- 📑 **[Documentation Index](DOCUMENTATION_INDEX.md)** - Complete guide to all documentation
 - 📖 **[Branching Strategy Guide](BRANCHING_STRATEGY.md)** - Complete workflow instructions and best practices
 - 📊 **[Branch Diagram](BRANCH_DIAGRAM.md)** - Visual representation of the workflow
 - 🚀 **[Git Cheatsheet](GIT_CHEATSHEET.md)** - Quick reference for Git commands
