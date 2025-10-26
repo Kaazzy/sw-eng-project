@@ -6,7 +6,7 @@ This repository uses the following branch structure:
 
 - **main**: Main production branch for the project (already exists)
 - **front**: Frontend development branch
-- **back**: Backend development branch  
+- **back**: Backend development branch
 - **api**: API development branch
 
 ## Purpose
@@ -29,7 +29,7 @@ git fetch origin main
 git checkout -b front origin/main
 git push origin front
 
-# Create and push the back branch  
+# Create and push the back branch
 git checkout -b back origin/main
 git push origin back
 
