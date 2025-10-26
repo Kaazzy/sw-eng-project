@@ -14,7 +14,14 @@ We use a simple 4-branch structure:
 - **back**: Backend development
 - **api**: API development
 
-📖 **[Read the complete Branching Strategy Guide](BRANCHING_STRATEGY.md)** for detailed workflow instructions, examples, and best practices.
+### Documentation
+
+- 📖 **[Branching Strategy Guide](BRANCHING_STRATEGY.md)** - Complete workflow instructions and best practices
+- 📊 **[Branch Diagram](BRANCH_DIAGRAM.md)** - Visual representation of the workflow
+- 🚀 **[Git Cheatsheet](GIT_CHEATSHEET.md)** - Quick reference for Git commands
+- 🤝 **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to the project
+- ⚙️ **[Repository Setup](REPOSITORY_SETUP.md)** - For administrators only
+- 🔧 **[Branch Initialization](BRANCH_INITIALIZATION.md)** - First-time setup guide
 
 ## Quick Start
 
