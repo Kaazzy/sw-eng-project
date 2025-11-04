@@ -16,5 +16,3 @@ namespace sw_project.Models
 
     }
 }
-
-hello world
