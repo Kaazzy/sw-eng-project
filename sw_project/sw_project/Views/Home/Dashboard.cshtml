@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Financial Dashboard</h1>
+    
+    <!-- Financial Overview Section -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Expenses</div>
+                <div class="card-body">
+                    <h3 class="card-title">$@ViewBag.TotalExpenses.ToString("N2")</h3>
+                    <p class="card-text">Sum of all recorded expenses</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Number of Transactions</div>
+                <div class="card-body">
+                    <h3 class="card-title">@ViewBag.ExpenseCount</h3>
+                    <p class="card-text">Total expense entries</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Average Expense</div>
+                <div class="card-body">
+                    <h3 class="card-title">$@ViewBag.AverageExpense.ToString("N2")</h3>
+                    <p class="card-text">Average per transaction</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Placeholder Sections for Future Features -->
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Budget Tracker</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Coming Soon</p>
+                    <p>Track your monthly budget and compare it against your actual spending.</p>
+                    <div class="alert alert-light" role="alert">
+                        <i>This feature will be available in a future update.</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Spending Trends</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Coming Soon</p>
+                    <p>Visualize your spending patterns over time with interactive charts.</p>
+                    <div class="alert alert-light" role="alert">
+                        <i>This feature will be available in a future update.</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Category Analysis</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Coming Soon</p>
+                    <p>Break down your expenses by category to understand where your money goes.</p>
+                    <div class="alert alert-light" role="alert">
+                        <i>This feature will be available in a future update.</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">Financial Goals</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Coming Soon</p>
+                    <p>Set and track your financial goals and savings targets.</p>
+                    <div class="alert alert-light" role="alert">
+                        <i>This feature will be available in a future update.</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
