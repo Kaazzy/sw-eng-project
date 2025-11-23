@@ -60,6 +60,8 @@ Update the connection string in `sw_project/appsettings.json` to match your SQL 
 - For LocalDB: `(localdb)\\mssqllocaldb`
 - For a named instance: `localhost\\YOUR_INSTANCE_NAME`
 
+**Security Note**: The `TrustServerCertificate=True` setting is included for development purposes. In production environments, ensure proper SSL certificate validation is configured.
+
 ### 4. Restore Dependencies
 
 ```bash
