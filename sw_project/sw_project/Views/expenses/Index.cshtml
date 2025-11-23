@@ -1,0 +1,32 @@
+﻿@model IEnumerable<sw_project.Models.Expense>
+
+    <h2>My Expenses</h2>
+
+    <div class=" container ">
+        <table class="table  table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td>@item.Date.ToShortDateString()</td>
+                        <td>@item.Amount.ToString("C") $</td>
+                        <td>@item.Description</td>
+                        <td>@item.Category</td>
+                    </tr>
+            }
+)
+
+            </tbody>
+
+        </table>
+        
+        </div>
