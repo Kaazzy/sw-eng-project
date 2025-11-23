@@ -28,7 +28,7 @@ namespace sw_project.Controllers
             {
                 // TODO: Implement actual authentication logic
                 // For now, just log the attempt and redirect to home
-                _logger.LogInformation("Login attempt for email: {Email}", model.Email);
+                _logger.LogInformation("Login attempt received");
                 
                 // This is a placeholder - actual authentication would go here
                 TempData["Message"] = "Login functionality not yet implemented. This is a UI demonstration.";
