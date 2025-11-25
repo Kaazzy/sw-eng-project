@@ -15,7 +15,7 @@ builder.Services.AddDbContext<FinanceAppContext>(options =>
   
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
+builder.Services.AddScoped<sw_project.Data.services.IExpensesService, sw_project.Data.services.ExpensesService>();
 var app = builder.Build();
 
 
