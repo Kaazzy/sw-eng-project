@@ -10,10 +10,25 @@ namespace sw_project.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+       public async Task<IActionResult> Index()
         {
-            var expenses = _context.Expenses.ToList();
+            var expenses = await _context.Expenses.ToListAsync();
             return View(expenses);
         }
-    }
-}
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(Expense expense)
+        {
+            if(ModelState.IsValid)
+            {
+                await _expensesService.Add(expense);
+
+                return RedirectToAction("Index");
+            }
+
+            return View(expense);
+        }
+    
