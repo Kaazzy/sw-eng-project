@@ -1,4 +1,6 @@
-﻿@{
+﻿@* File: sw_project/Views/Home/Index.cshtml *@
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,3 +8,23 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="row mt-5"> 
+    <div class="col-md-8 mx-auto">
+        <canvas id="revenueChartCanvas" style="max-height: 400px;"></canvas>
+    </div>
+</div>
+
+@* === JAVASCRIPT LINKS (Must be at the very bottom of the file) === *@
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <script src="~/chart/chart.js"></script> 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // This calls the function in your chart.js file
+            initializeRevenueChart('revenueChartCanvas');
+        });
+    </script>
+}
