@@ -33,6 +33,12 @@ namespace sw_project.Controllers
 
             return View(expense);
         }
+    }
+    public IActionResult GetChart(){
+        var data = _expensesServices.GetChartData();
+        return json(data);
+    }
+}
 
 
 

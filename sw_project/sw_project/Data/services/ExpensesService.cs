@@ -23,5 +23,15 @@ namespace sw_project.Data.services
             var expenses = await _context.Expenses.ToListAsync();
             return expenses;
         }
+        public IQueryable GetChartData(){
+            var data = _context.Expenses
+                                .GroupBy(e =>e.Category)
+                                .Select(g =>new{
+                                    Category =g.key
+                                    Total = g.Sum(e=>e.Amount)
+                                });
+            return data;
+        }
     }
+
 }

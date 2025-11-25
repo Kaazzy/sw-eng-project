@@ -6,5 +6,6 @@ namespace sw_project.Data.services
     {
         Task<IEnumerable<Expense>> GetAll();
         Task Add(Expense expense);
+        IQueryAble GetChartData();
     }
 }
