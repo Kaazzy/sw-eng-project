@@ -20,3 +20,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Landing / hero styles */
+.hero {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+}
+.hero .display-4 { color: #1f2937; }
+.stat-card { border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
+.stat-title { color: #6c757d; font-size: 0.9rem; }
+.stat-value { font-size: 1.6rem; font-weight: 600; margin-top: 6px; }
+
+@media (max-width: 575.98px) {
+  .hero .display-4 { font-size: 1.6rem; }
+}

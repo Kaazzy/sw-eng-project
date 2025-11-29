@@ -7,15 +7,27 @@ namespace sw_project.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly sw_project.Data.services.IExpensesService _expensesService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, sw_project.Data.services.IExpensesService expensesService)
         {
             _logger = logger;
+            _expensesService = expensesService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var expenses = (await _expensesService.GetAll()).ToList();
+
+            var model = new Models.HomeIndexViewModel();
+
+            model.TotalExpenses = expenses.Sum(e => e.Amount);
+            var now = DateTime.Now;
+            model.ThisMonthTotal = expenses.Where(e => e.Date.Year == now.Year && e.Date.Month == now.Month).Sum(e => e.Amount);
+            model.CategoriesCount = expenses.Select(e => e.Category).Where(c => !string.IsNullOrWhiteSpace(c)).Distinct().Count();
+            model.RecentExpenses = expenses.OrderByDescending(e => e.Date).Take(5).ToList();
+
+            return View(model);
         }
 
         public IActionResult Privacy()
