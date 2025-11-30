@@ -18,7 +18,7 @@
                 {
                     <tr>
                         <td>@item.Date.ToShortDateString()</td>
-                        <td>@item.Amount.ToString("C") $</td>
+                        <td>@item.Amount.ToString("C")</td>
                         <td>@item.Description</td>
                         <td>@item.Category</td>
                     </tr>
@@ -31,30 +31,63 @@
         
         </div>
         <h2>Expenses Overview</h2>
-        <div>
-            <canvas style="max-width: 450px; max_height:450px;" id="myChart"></canvas>
-        </div>
-        
+                <div class="d-flex justify-content-center">
+                    <div style="width:520px;height:520px;">
+                        <canvas id="myChart" width="520" height="520"></canvas>
+                    </div>
+                </div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-  const ctx = document.getElementById('myChart');
-  fetch('/Expense/GetChart')
-       .then(response.json())
-       .then(data =>{
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: data.map(d =>d.Category),
-                datasets: [{
-                    data: data.map(d => d.total),
-                }]
-    },
-   
-  });
+    (function(){
+        const canvas = document.getElementById('myChart');
+        if (!canvas) return;
 
+        fetch('/Expenses/GetChart')
+            .then(r => r.json())
+                .then(data => {
+                 // handle both PascalCase (Category) and camelCase (category) JSON property names
+                 const labels = data.map(d => d.category ?? d.Category ?? '(Uncategorized)');
+                 const values = data.map(d => parseFloat(d.total ?? d.Total) || 0);
 
-       })
- 
+                 new Chart(canvas.getContext('2d'), {
+                        type: 'pie',
+                        data: {
+                             labels: labels,
+                             datasets: [{
+                                        data: values,
+                                        backgroundColor: labels.map((_, i) => `hsl(${i*50 % 360} 70% 50%)`)
+                             }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        boxWidth: 12,
+                                        padding: 16
+                                    }
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            const label = context.label || '';
+                                            const value = context.raw || 0;
+                                            return label + ': ' + value.toLocaleString();
+                                        }
+                                    }
+                                }
+                            },
+                            layout: {
+                                padding: 16
+                            }
+                        }
+                 });
+            })
+            .catch(err => console.error('Chart load failed', err));
+    })();
 </script>
         

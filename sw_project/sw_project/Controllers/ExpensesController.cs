@@ -41,7 +41,27 @@ namespace sw_project.Controllers
 
             return RedirectToAction("Index");
         }
+        
+        // Returns aggregated totals per category for charting
+        [HttpGet]
+        public IActionResult GetChart()
+        {
+            var data = _expensesService.GetChartData();
 
+            if (data is System.Linq.IQueryable queryable)
+            {
+                var objects = queryable.Cast<object>().ToList();
+                var list = objects.Select(x => new
+                {
+                    Category = x.GetType().GetProperty("Category")?.GetValue(x, null)?.ToString() ?? "(Uncategorized)",
+                    Total = Convert.ToDecimal(x.GetType().GetProperty("Total")?.GetValue(x, null) ?? 0)
+                }).ToList();
+
+                return Json(list);
+            }
+
+            return Json(new object[0]);
+        }
         
     }
 }
