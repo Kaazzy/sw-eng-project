@@ -3,47 +3,57 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="hero bg-light py-5">
+<section class="home-hero py-5">
     <div class="container">
-        <div class="row align-items-center">
+        <div class="row align-items-center gy-4">
             <div class="col-md-8">
-                <h1 class="display-4 fw-bold">Welcome to FinanceApp</h1>
-                <p class="lead text-muted">Track your expenses quickly and easily. Add expenses, view charts and manage categories.</p>
-                <p>
-                    <a asp-controller="Expenses" asp-action="Create" class="btn btn-primary btn-lg me-2">Add Expense</a>
-                    <a asp-controller="Expenses" asp-action="Index" class="btn btn-outline-secondary btn-lg">View Expenses</a>
-                </p>
+                <h1 class="display-5 fw-bold mb-3">Welcome back 👋</h1>
+                <p class="lead text-secondary mb-4">Track spending, spot trends, and stay in control. Add expenses and visualize by category.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a asp-controller="Expenses" asp-action="Create" class="btn btn-primary btn-lg">Add Expense</a>
+                    <a asp-controller="Expenses" asp-action="Index" class="btn btn-outline-primary btn-lg">View Expenses</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="summary-card p-4">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-secondary">This Month</span>
+                        <span class="fw-semibold">@Model.ThisMonthTotal.ToString("C")</span>
+                    </div>
+                    <div class="progress mt-3" style="height:6px;">
+                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-            
-</div>
+</section>
 
 <div class="container my-4">
-        <div class="row g-3">
+    <div class="row g-4">
         <div class="col-md-4">
-            <div class="card stat-card p-3">
-                <div class="stat-title">Total Expenses</div>
-                <div class="stat-value">@Model.TotalExpenses.ToString("C")</div>
+            <div class="metric-card p-4">
+                <div class="metric-label">Total Expenses</div>
+                <div class="metric-value">@Model.TotalExpenses.ToString("C")</div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card stat-card p-3">
-                <div class="stat-title">This Month</div>
-                <div class="stat-value">@Model.ThisMonthTotal.ToString("C")</div>
+            <div class="metric-card p-4">
+                <div class="metric-label">This Month</div>
+                <div class="metric-value">@Model.ThisMonthTotal.ToString("C")</div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card stat-card p-3">
-                <div class="stat-title">Categories</div>
-                <div class="stat-value">@Model.CategoriesCount</div>
+            <div class="metric-card p-4">
+                <div class="metric-label">Categories</div>
+                <div class="metric-value">@Model.CategoriesCount</div>
             </div>
         </div>
     </div>
 
     <div class="row mt-4">
         <div class="col-12">
-            <div class="card p-3">
+            <div class="card p-3 shadow-sm">
                 <h5 class="mb-3">Recent Expenses</h5>
                 <ul class="list-group list-group-flush">
                     @if (Model.RecentExpenses != null && Model.RecentExpenses.Any())
@@ -53,7 +63,7 @@
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
                                     <div class="fw-semibold">@e.Description</div>
-                                    <div class="text-muted" style="font-size:.85rem;">@e.Category — @e.Date.ToString("yyyy-MM-dd")</div>
+                                    <div class="text-muted small">@e.Category — @e.Date.ToString("yyyy-MM-dd")</div>
                                 </div>
                                 <div class="text-nowrap">@e.Amount.ToString("C")</div>
                             </li>

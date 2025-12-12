@@ -1,9 +1,11 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using sw_project.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace sw_project.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -17,7 +19,8 @@ namespace sw_project.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var expenses = (await _expensesService.GetAll()).ToList();
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var expenses = (await _expensesService.GetAll(userId)).ToList();
 
             var model = new Models.HomeIndexViewModel();
 

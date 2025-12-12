@@ -20,6 +20,28 @@ html {
 body {
   margin-bottom: 60px;
 }
+ :root {
+   --brand-50: #eef4ff;
+   --brand-100: #d9e5ff;
+   --brand-200: #b9d0ff;
+   --brand-300: #8db6ff;
+   --brand-400: #5a97ff;
+   --brand-500: #2a78ff;
+   --brand-600: #155ee6;
+   --brand-700: #0f49b4;
+   --brand-800: #0c3a8f;
+   --brand-900: #0a306f;
+   --accent: #ff7b72;
+   --bg-soft: #f7f9fc;
+   --text-muted: #6c757d;
+   --card-border: #e9edf3;
+ }
+
+ body { background-color: var(--bg-soft); }
+
+ /* Navbar polish */
+ .navbar { backdrop-filter: saturate(180%) blur(6px); }
+ .navbar-light { background-color: rgba(255,255,255,.9) !important; }
 
 /* Landing / hero styles */
 .hero {
@@ -29,6 +51,48 @@ body {
 .stat-card { border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,0.04); }
 .stat-title { color: #6c757d; font-size: 0.9rem; }
 .stat-value { font-size: 1.6rem; font-weight: 600; margin-top: 6px; }
+.home-hero {
+  background: linear-gradient(180deg, var(--brand-50), rgba(255,255,255,1));
+}
+.summary-card {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: .75rem;
+  box-shadow: 0 6px 24px rgba(16,24,40,.06);
+}
+.metric-card {
+  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: .75rem;
+  box-shadow: 0 6px 24px rgba(16,24,40,.06);
+}
+.metric-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+ /* Buttons */
+ .btn-primary { background-color: var(--brand-600); border-color: var(--brand-600); }
+ .btn-primary:hover { background-color: var(--brand-700); border-color: var(--brand-700); }
+ .btn-outline-primary { color: var(--brand-700); border-color: var(--brand-300); }
+ .btn-outline-primary:hover { background-color: var(--brand-100); border-color: var(--brand-400); }
+
+ /* Progress bar accent */
+ .progress-bar { background-color: var(--brand-500); }
+
+ /* Cards general */
+ .card { border-color: var(--card-border); border-radius: .75rem; }
+ .card h5 { font-weight: 600; }
+
+/* Hide Identity reset/forgot password links */
+a[href*="/Account/ForgotPassword"],
+a[href*="/Account/ResetPassword"] {
+  display: none !important;
+}
 
 @media (max-width: 575.98px) {
   .hero .display-4 { font-size: 1.6rem; }

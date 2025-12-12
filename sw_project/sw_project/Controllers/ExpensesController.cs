@@ -1,6 +1,7 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using sw_project.Data;
 using sw_project.Data.services;
@@ -8,6 +9,7 @@ using sw_project.Models;
 
 namespace sw_project.Controllers
 {
+    [Authorize]
     public class ExpensesController : Controller
     {
         private readonly IExpensesService _expensesService;
@@ -20,7 +22,8 @@ namespace sw_project.Controllers
     
         public async Task<IActionResult> Index()
         {
-            var expenses = await _expensesService.GetAll();
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var expenses = await _expensesService.GetAll(userId);
             return View(expenses);
         }
 
@@ -36,7 +39,8 @@ namespace sw_project.Controllers
         {
             if (!ModelState.IsValid)
                 return View(expense);
-
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            expense.UserId = userId;
             await _expensesService.Add(expense);
 
             return RedirectToAction("Index");
@@ -46,7 +50,8 @@ namespace sw_project.Controllers
         [HttpGet]
         public IActionResult GetChart()
         {
-            var data = _expensesService.GetChartData();
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var data = _expensesService.GetChartData(userId);
 
             if (data is System.Linq.IQueryable queryable)
             {

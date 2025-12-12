@@ -14,5 +14,8 @@ namespace sw_project.Models
         public DateTime Date { get; set; } = DateTime.Now;
         public string Category { get; set; } = null!;
 
+        // Ownership: which user created/owns this expense
+        public string? UserId { get; set; }
+
     }
 }

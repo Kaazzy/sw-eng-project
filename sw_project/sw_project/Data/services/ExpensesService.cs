@@ -18,18 +18,28 @@ namespace sw_project.Data.services
 
         }
 
-        public async Task<IEnumerable<Expense>> GetAll()
+        public async Task<IEnumerable<Expense>> GetAll(string? userId = null)
         {
-            var expenses = await _context.Expenses.ToListAsync();
+            var query = _context.Expenses.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                query = query.Where(e => e.UserId == userId);
+            }
+            var expenses = await query.ToListAsync();
             return expenses;
         }
-        public IQueryable GetChartData(){
-            var data = _context.Expenses
-                                .GroupBy(e =>e.Category)
-                                .Select(g =>new{
-                                    Category =g.Key,
-                                    Total = g.Sum(e=>e.Amount)
-                                });
+        public IQueryable GetChartData(string? userId = null){
+            var query = _context.Expenses.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                query = query.Where(e => e.UserId == userId);
+            }
+            var data = query
+                        .GroupBy(e => e.Category)
+                        .Select(g => new {
+                            Category = g.Key,
+                            Total = g.Sum(e => e.Amount)
+                        });
             return data;
         }
     }
