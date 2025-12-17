@@ -21,7 +21,8 @@ jobs:
         with:
           dotnet-version: |
             8.0.x
-          cache: true
+          # Disable NuGet caching because no packages.lock.json exists yet
+          cache: false
 
       - name: Restore
         run: dotnet restore "sw_project/sw_project.sln"
