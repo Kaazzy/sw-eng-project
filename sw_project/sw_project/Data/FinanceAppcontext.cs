@@ -23,6 +23,10 @@ namespace sw_project.Data
             modelBuilder.Entity<Expense>()
                 .Property(e => e.Amount)
                 .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Expense>()
+                .Property(e => e.Currency)
+                .HasConversion<string>();
         }
     }
 }
