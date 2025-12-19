@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sw_project.Data;
 
@@ -11,9 +12,11 @@ using sw_project.Data;
 namespace sw_project.Migrations
 {
     [DbContext(typeof(FinanceAppContext))]
-    partial class FinanceAppContextModelSnapshot : ModelSnapshot
+    [Migration("20251219182636_AddCurrencyToExpense")]
+    partial class AddCurrencyToExpense
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -13,9 +13,7 @@ namespace sw_project.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IExpensesService _expensesService;
 
-        public HomeController(
-            ILogger<HomeController> logger,
-            IExpensesService expensesService)
+    public HomeController(ILogger<HomeController> logger, IExpensesService expensesService)
         {
             _logger = logger;
             _expensesService = expensesService;

@@ -23,6 +23,8 @@ namespace sw_project.Data
             modelBuilder.Entity<Expense>()
                 .Property(e => e.Amount)
                 .HasPrecision(18, 2);
+            // Map Currency enum using default int mapping to match DB column type
+            // (previous string conversion caused Int32->String cast issues)
         }
     }
 }

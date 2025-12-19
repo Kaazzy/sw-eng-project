@@ -3,6 +3,7 @@ using sw_project.Models;
 using sw_project.Services.Interfaces;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace sw_project.Controllers
 {
@@ -18,7 +19,7 @@ namespace sw_project.Controllers
         // Helper method to get logged-in user ID
         private string GetUserId()
         {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
         }
 
         // GET: Expenses
@@ -27,6 +28,15 @@ namespace sw_project.Controllers
             var userId = GetUserId();
             var expenses = await _expensesService.GetAll(userId);
             return View(expenses);
+        }
+
+        // GET: /Expenses/GetChart
+        [HttpGet]
+        public IActionResult GetChart()
+        {
+            var userId = GetUserId();
+            var data = _expensesService.GetChartData(userId).Cast<object>().ToList();
+            return Json(data);
         }
 
         // GET: Expenses/Create
