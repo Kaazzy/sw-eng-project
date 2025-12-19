@@ -1,7 +1,8 @@
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sw_project.Models;
-using Microsoft.AspNetCore.Authorization;
+using sw_project.Services.Interfaces;
 
 namespace sw_project.Controllers
 {
@@ -9,9 +10,11 @@ namespace sw_project.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly sw_project.Data.services.IExpensesService _expensesService;
+        private readonly IExpensesService _expensesService;
 
-        public HomeController(ILogger<HomeController> logger, sw_project.Data.services.IExpensesService expensesService)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IExpensesService expensesService)
         {
             _logger = logger;
             _expensesService = expensesService;
@@ -22,13 +25,25 @@ namespace sw_project.Controllers
             var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             var expenses = (await _expensesService.GetAll(userId)).ToList();
 
-            var model = new Models.HomeIndexViewModel();
+            var model = new HomeIndexViewModel();
 
             model.TotalExpenses = expenses.Sum(e => e.Amount);
+
             var now = DateTime.Now;
-            model.ThisMonthTotal = expenses.Where(e => e.Date.Year == now.Year && e.Date.Month == now.Month).Sum(e => e.Amount);
-            model.CategoriesCount = expenses.Select(e => e.Category).Where(c => !string.IsNullOrWhiteSpace(c)).Distinct().Count();
-            model.RecentExpenses = expenses.OrderByDescending(e => e.Date).Take(5).ToList();
+            model.ThisMonthTotal = expenses
+                .Where(e => e.Date.Year == now.Year && e.Date.Month == now.Month)
+                .Sum(e => e.Amount);
+
+            model.CategoriesCount = expenses
+                .Select(e => e.Category)
+                .Where(c => !string.IsNullOrWhiteSpace(c))
+                .Distinct()
+                .Count();
+
+            model.RecentExpenses = expenses
+                .OrderByDescending(e => e.Date)
+                .Take(5)
+                .ToList();
 
             return View(model);
         }
@@ -41,7 +56,10 @@ namespace sw_project.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }
