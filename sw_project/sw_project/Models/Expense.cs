@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace sw_project.Models
@@ -26,6 +27,7 @@ namespace sw_project.Models
 
         [Required]
         public DateTime Date { get; set; } = DateTime.Now;
+
         public string Category { get; set; } = null!;
 
         // Ownership: which user created/owns this expense
