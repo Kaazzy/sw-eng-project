@@ -45,6 +45,48 @@ namespace sw_project.Controllers
 
             return RedirectToAction("Index");
         }
+
+        // GET: /Expenses/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var expense = await _expensesService.GetById(id, userId);
+            if (expense == null) return NotFound();
+            return View(expense);
+        }
+
+        // POST: /Expenses/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Expense expense)
+        {
+            if (id != expense.ID) return BadRequest();
+            if (!ModelState.IsValid) return View(expense);
+
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            expense.UserId = userId; // enforce ownership
+            await _expensesService.Update(expense);
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: /Expenses/Delete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var expense = await _expensesService.GetById(id, userId);
+            if (expense == null) return NotFound();
+            return View(expense);
+        }
+
+        // POST: /Expenses/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            await _expensesService.Delete(id, userId);
+            return RedirectToAction(nameof(Index));
+        }
         
         // Returns aggregated totals per category for charting
         [HttpGet]
