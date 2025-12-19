@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using sw_project.Models;
 using sw_project.Services.Interfaces;
 
@@ -22,7 +23,7 @@ namespace sw_project.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var userId = User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
             var expenses = (await _expensesService.GetAll(userId)).ToList();
 
             var model = new HomeIndexViewModel();
