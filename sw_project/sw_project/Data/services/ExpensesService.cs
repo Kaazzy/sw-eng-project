@@ -1,83 +1,49 @@
-﻿using Microsoft.EntityFrameworkCore;
-using sw_project.Models;
+﻿using sw_project.Models;
+using sw_project.Repositories.Interfaces;
+using sw_project.Services.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace sw_project.Data.services
+namespace sw_project.Services
 {
     public class ExpensesService : IExpensesService
     {
-        private readonly FinanceAppContext _context;
+        private readonly IExpensesRepository _repository;
 
-        public ExpensesService(FinanceAppContext context) 
+        public ExpensesService(IExpensesRepository repository)
         {
-            _context = context;
-        }
-        public async Task Add(Expense expense)
-        {
-            _context.Expenses.Add(expense);
-            await _context.SaveChangesAsync();
-
+            _repository = repository;
         }
 
-        public async Task<IEnumerable<Expense>> GetAll(string? userId = null)
+        public async Task<IEnumerable<Expense>> GetAll(string userId)
         {
-            var query = _context.Expenses.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(userId))
-            {
-                query = query.Where(e => e.UserId == userId);
-            }
-            var expenses = await query.ToListAsync();
-            return expenses;
+            return await _repository.GetAll(userId);
         }
 
-        public async Task<Expense?> GetById(int id, string? userId = null)
+        public async Task<Expense> GetById(int id, string userId)
         {
-            var query = _context.Expenses.AsQueryable().Where(e => e.ID == id);
-            if (!string.IsNullOrWhiteSpace(userId))
-            {
-                query = query.Where(e => e.UserId == userId);
-            }
-            return await query.FirstOrDefaultAsync();
+            return await _repository.GetById(id, userId);
+        }
+
+        public async Task Create(Expense expense)
+        {
+            await _repository.Add(expense);
         }
 
         public async Task Update(Expense expense)
         {
-            var existing = await _context.Expenses.FirstOrDefaultAsync(e => e.ID == expense.ID && e.UserId == expense.UserId);
-            if (existing is null) return;
-
-            existing.Description = expense.Description;
-            existing.Amount = expense.Amount;
-            existing.Date = expense.Date;
-            existing.Category = expense.Category;
-            await _context.SaveChangesAsync();
+            await _repository.Update(expense);
         }
 
-        public async Task<bool> Delete(int id, string? userId = null)
+        public async Task Delete(int id, string userId)
         {
-            var query = _context.Expenses.AsQueryable().Where(e => e.ID == id);
-            if (!string.IsNullOrWhiteSpace(userId))
-            {
-                query = query.Where(e => e.UserId == userId);
-            }
-            var entity = await query.FirstOrDefaultAsync();
-            if (entity is null) return false;
-            _context.Expenses.Remove(entity);
-            await _context.SaveChangesAsync();
-            return true;
+            await _repository.Delete(id, userId);
         }
-        public IQueryable GetChartData(string? userId = null){
-            var query = _context.Expenses.AsQueryable();
-            if (!string.IsNullOrWhiteSpace(userId))
-            {
-                query = query.Where(e => e.UserId == userId);
-            }
-            var data = query
-                        .GroupBy(e => e.Category)
-                        .Select(g => new {
-                            Category = g.Key,
-                            Total = g.Sum(e => e.Amount)
-                        });
-            return data;
+
+        public IQueryable GetChartData(string userId)
+        {
+            return _repository.GetChartData(userId);
         }
     }
-
 }
