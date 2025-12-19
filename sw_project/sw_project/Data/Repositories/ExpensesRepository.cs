@@ -24,7 +24,7 @@ namespace sw_project.Repositories
                                  .ToListAsync();
         }
 
-        public async Task<Expense> GetById(int id, string userId)
+        public async Task<Expense?> GetById(int id, string userId)
         {
             return await _context.Expenses
                                  .FirstOrDefaultAsync(e => e.ID == id && e.UserId == userId);

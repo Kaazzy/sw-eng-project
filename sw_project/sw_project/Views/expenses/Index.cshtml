@@ -22,7 +22,21 @@
                 {
                     <tr>
                         <td>@item.Date.ToShortDateString()</td>
-                        <td>@item.Amount.ToString("C")</td>
+                        <td>
+                            @{
+                                // Map currency to display symbol/code
+                                var symbol = item.Currency switch
+                                {
+                                    sw_project.Models.Currency.USD => "$",
+                                    sw_project.Models.Currency.EUR => "&euro;",
+                                    sw_project.Models.Currency.GBP => "&pound;",
+                                    sw_project.Models.Currency.EGP => "EGP",
+                                    _ => string.Empty
+                                };
+                                var amountText = item.Amount.ToString("N2");
+                            }
+                            @Html.Raw($"{symbol} {amountText}")
+                        </td>
                         <td>@item.Description</td>
                         <td>@item.Category</td>
                         <td>

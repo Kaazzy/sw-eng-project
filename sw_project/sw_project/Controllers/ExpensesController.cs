@@ -18,7 +18,7 @@ namespace sw_project.Controllers
         // Helper method to get logged-in user ID
         private string GetUserId()
         {
-            return User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
         }
 
         // GET: Expenses

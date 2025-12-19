@@ -21,7 +21,7 @@ namespace sw_project.Services
             return await _repository.GetAll(userId);
         }
 
-        public async Task<Expense> GetById(int id, string userId)
+        public async Task<Expense?> GetById(int id, string userId)
         {
             return await _repository.GetById(id, userId);
         }

@@ -74,8 +74,8 @@
             switch(value){
                 case "EGP": currencySymbol.textContent = "EGP"; break;
                 case "USD": currencySymbol.textContent = "$"; break;
-                case "EUR": currencySymbol.textContent = "€"; break;
-                case "GBP": currencySymbol.textContent = "£"; break;
+                case "EUR": currencySymbol.innerHTML = "&euro;"; break;
+                case "GBP": currencySymbol.innerHTML = "&pound;"; break;
                 default: currencySymbol.textContent = ""; 
             }
         }
