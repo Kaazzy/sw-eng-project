@@ -28,6 +28,42 @@ namespace sw_project.Data.services
             var expenses = await query.ToListAsync();
             return expenses;
         }
+
+        public async Task<Expense?> GetById(int id, string? userId = null)
+        {
+            var query = _context.Expenses.AsQueryable().Where(e => e.ID == id);
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                query = query.Where(e => e.UserId == userId);
+            }
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task Update(Expense expense)
+        {
+            var existing = await _context.Expenses.FirstOrDefaultAsync(e => e.ID == expense.ID && e.UserId == expense.UserId);
+            if (existing is null) return;
+
+            existing.Description = expense.Description;
+            existing.Amount = expense.Amount;
+            existing.Date = expense.Date;
+            existing.Category = expense.Category;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> Delete(int id, string? userId = null)
+        {
+            var query = _context.Expenses.AsQueryable().Where(e => e.ID == id);
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                query = query.Where(e => e.UserId == userId);
+            }
+            var entity = await query.FirstOrDefaultAsync();
+            if (entity is null) return false;
+            _context.Expenses.Remove(entity);
+            await _context.SaveChangesAsync();
+            return true;
+        }
         public IQueryable GetChartData(string? userId = null){
             var query = _context.Expenses.AsQueryable();
             if (!string.IsNullOrWhiteSpace(userId))

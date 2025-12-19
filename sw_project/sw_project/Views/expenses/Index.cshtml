@@ -3,6 +3,9 @@
     <h2>My Expenses</h2>
 
     <div class=" container ">
+        <div class="mb-2">
+            <a asp-action="Create" class="btn btn-primary">Add Expense</a>
+        </div>
         <table class="table  table-bordered">
             <thead class="table-light">
                 <tr>
@@ -10,6 +13,7 @@
                     <th>Amount</th>
                     <th>Description</th>
                     <th>Category</th>
+                    <th style="width:140px;">Actions</th>
                 </tr>
 
             </thead>
@@ -21,6 +25,10 @@
                         <td>@item.Amount.ToString("C")</td>
                         <td>@item.Description</td>
                         <td>@item.Category</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </td>
                     </tr>
             }
 
